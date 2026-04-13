@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Menu Digital — Warung Bu Sar</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+
+    <style>
+        :root {
+            --teal:       #0D9488;
+            --teal-mid:   #14B8A6;
+            --teal-light: #CCFBF1;
+            --teal-soft:  #F0FDFA;
+            --bg:         #F4F6F8;
+            --card:       #FFFFFF;
+            --ink:        #1E293B;
+            --ink-mid:    #475569;
+            --ink-soft:   #94A3B8;
+            --border:     #E2E8F0;
+            --green:      #059669;
+            --amber:      #D97706;
+            --sh-sm:      0 1px 4px rgba(15,23,42,0.06);
+            --sh-md:      0 4px 16px rgba(15,23,42,0.08);
+            --sh-teal:    0 12px 32px rgba(13,148,136,0.22);
+            --r:          12px;
+            --ease:       cubic-bezier(0.22,1,0.36,1);
+        }
+
+        *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+        html { scroll-behavior:smooth; }
+        body {
+            font-family:'Poppins',sans-serif;
+            background:var(--bg);
+            color:var(--ink);
+            max-width:480px;
+            margin:0 auto;
+            min-height:100vh;
+            overflow-x:hidden;
+        }
+
+        /* ── HEADER ── */
+        .hdr-wrap {
+            position:sticky; top:0; z-index:100;
+            background:rgba(255,255,255,0.96);
+            backdrop-filter:blur(16px);
+            -webkit-backdrop-filter:blur(16px);
+            border-bottom:1px solid var(--border);
+        }
+        header {
+            display:flex; align-items:center; gap:13px;
+            padding:14px 20px 12px;
+        }
+        .logo-box {
+            width:46px; height:46px; border-radius:var(--r);
+            overflow:hidden; flex-shrink:0;
+            background:var(--teal);
+            display:flex; align-items:center; justify-content:center;
+            box-shadow:0 4px 12px rgba(13,148,136,0.3);
+        }
+        .logo-box img { width:100%; height:100%; object-fit:cover; }
+        .logo-fb {
+            font-size:1.1rem; font-weight:800; color:#fff;
+            letter-spacing:-0.5px; user-select:none;
+        }
+        .hdr-info h1 {
+            font-size:1rem; font-weight:700;
+            white-space:nowrap; overflow:hidden;
+            text-overflow:ellipsis; line-height:1.3;
+        }
+        .hdr-meta {
+            display:flex; align-items:center; gap:5px;
+            margin-top:2px;
+            font-size:0.67rem; font-weight:500; color:var(--ink-soft);
+        }
+        .dot-live {
+            width:6px; height:6px;
+            background:var(--green); border-radius:50%;
+            animation:blink 2s ease infinite;
+        }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+        /* ── FILTER ── */
+        .filter-row {
+            display:flex; gap:7px;
+            padding:0 20px 13px;
+            overflow-x:auto; scrollbar-width:none;
+        }
+        .filter-row::-webkit-scrollbar { display:none; }
+        .pill {
+            padding:7px 15px; border-radius:100px;
+            border:1.5px solid var(--border);
+            background:var(--card);
+            font-family:'Poppins',sans-serif;
+            font-size:0.73rem; font-weight:600;
+            color:var(--ink-mid);
+            cursor:pointer; white-space:nowrap;
+            transition:all .18s; user-select:none;
+        }
+        .pill:active { transform:scale(.94); }
+        .pill.active {
+            background:var(--teal); color:#fff;
+            border-color:var(--teal);
+            box-shadow:0 3px 10px rgba(13,148,136,.25);
+        }
+
+        /* ── HERO ── */
+        .hero {
+            margin:14px 20px 2px;
+            background:linear-gradient(115deg,var(--teal) 0%,var(--teal-mid) 100%);
+            border-radius:var(--r); padding:15px 18px;
+            display:flex; align-items:center; gap:10px;
+            overflow:hidden; position:relative;
+        }
+        .hero::before {
+            content:''; position:absolute; right:-14px; top:-20px;
+            width:100px; height:100px; border-radius:50%;
+            background:rgba(255,255,255,.08);
+        }
+        .hero::after {
+            content:''; position:absolute; right:30px; bottom:-30px;
+            width:70px; height:70px; border-radius:50%;
+            background:rgba(255,255,255,.06);
+        }
+        .hero-lbl {
+            font-size:.6rem; font-weight:600;
+            color:rgba(255,255,255,.65);
+            text-transform:uppercase; letter-spacing:.08em;
+            margin-bottom:3px;
+        }
+        .hero-ttl {
+            font-size:.92rem; font-weight:700; color:#fff; line-height:1.3;
+        }
+        .hero-badge {
+            margin-left:auto; flex-shrink:0; position:relative; z-index:1;
+            background:rgba(255,255,255,.18);
+            border:1px solid rgba(255,255,255,.3);
+            color:#fff; font-size:.67rem; font-weight:700;
+            padding:5px 11px; border-radius:100px;
+        }
+
+        /* ── MENU ── */
+        .menu-wrap { padding:16px 20px 120px; }
+        .cat-hd {
+            display:flex; align-items:center; gap:10px;
+            margin-bottom:11px; margin-top:6px;
+        }
+        .cat-hd h2 {
+            font-size:.72rem; font-weight:700;
+            color:var(--ink-soft);
+            text-transform:uppercase; letter-spacing:.07em;
+            white-space:nowrap;
+        }
+        .cat-line { flex:1; height:1px; background:var(--border); }
+        .menu-group { margin-bottom:20px; }
+
+        /* ── ITEM ── */
+        .menu-item {
+            display:flex; gap:13px; align-items:center;
+            background:var(--card);
+            border-radius:var(--r); padding:11px;
+            margin-bottom:9px;
+            border:1px solid var(--border);
+            box-shadow:var(--sh-sm);
+            cursor:pointer;
+            transition:transform .16s var(--ease), box-shadow .16s;
+            opacity:0; transform:translateY(16px);
+            animation:rise .4s var(--ease) forwards;
+        }
+        .menu-item:active { transform:scale(.982); }
+        @keyframes rise { to { opacity:1; transform:translateY(0); } }
+
+        .item-img {
+            width:80px; height:80px; flex-shrink:0;
+            border-radius:10px; overflow:hidden;
+            background:var(--bg); position:relative;
+        }
+        .item-img img {
+            width:100%; height:100%; object-fit:cover;
+            transition:transform .3s var(--ease);
+            display:block;
+        }
+        .menu-item:hover .item-img img { transform:scale(1.06); }
+        .img-fb {
+            width:100%; height:100%;
+            display:flex; align-items:center; justify-content:center;
+            font-size:2rem;
+            background:linear-gradient(135deg,var(--teal-light),var(--teal-soft));
+        }
+        .badge {
+            position:absolute; bottom:5px; left:5px;
+            background:var(--amber); color:#fff;
+            font-size:.55rem; font-weight:700;
+            padding:2px 7px; border-radius:4px;
+            border:1.5px solid #fff;
+        }
+
+        .item-info {
+            flex:1; min-width:0;
+            display:flex; flex-direction:column;
+            justify-content:space-between; gap:4px;
+        }
+        .item-name { font-size:.87rem; font-weight:700; line-height:1.3; }
+        .item-desc {
+            font-size:.69rem; color:var(--ink-soft); line-height:1.5;
+            display:-webkit-box; -webkit-line-clamp:2;
+            -webkit-box-orient:vertical; overflow:hidden;
+        }
+        .item-bot {
+            display:flex; justify-content:space-between; align-items:center;
+        }
+        .item-price { font-size:.9rem; font-weight:700; color:var(--teal); }
+        .btn-add {
+            width:32px; height:32px; border-radius:50%; border:none;
+            background:var(--teal-light); color:var(--teal);
+            display:flex; align-items:center; justify-content:center;
+            cursor:pointer; flex-shrink:0;
+            transition:background .15s, transform .12s;
+        }
+        .btn-add:active { background:var(--teal); color:#fff; transform:scale(.86); }
+        .btn-add .material-icons-round { font-size:1.05rem; }
+
+        /* ── CART BAR ── */
+        .cart-bar {
+            position:fixed; bottom:18px; left:50%;
+            transform:translateX(-50%);
+            width:calc(100% - 40px); max-width:440px;
+            background:var(--teal); color:#fff;
+            padding:13px 18px; border-radius:var(--r);
+            z-index:200; cursor:pointer;
+            transition:bottom .4s var(--ease), opacity .3s;
+            box-shadow:var(--sh-teal);
+            display:flex; justify-content:space-between; align-items:center;
+        }
+        .cart-bar.hidden { bottom:-100px; opacity:0; pointer-events:none; }
+        .cb-l { display:flex; align-items:center; gap:9px; }
+        .cb-badge {
+            background:rgba(255,255,255,.22); border:1px solid rgba(255,255,255,.3);
+            font-size:.72rem; font-weight:700; padding:3px 9px; border-radius:100px;
+        }
+        .cb-lbl { font-size:.82rem; font-weight:600; }
+        .cb-price {
+            display:flex; align-items:center; gap:4px;
+            font-size:.88rem; font-weight:700;
+        }
+        .cb-price .material-icons-round { font-size:.95rem; opacity:.7; }
+
+        /* ── MODAL ── */
+        .overlay {
+            position:fixed; inset:0;
+            background:rgba(30,41,59,.5);
+            backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+            z-index:300; opacity:0; pointer-events:none;
+            transition:opacity .28s;
+        }
+        .overlay.show { opacity:1; pointer-events:all; }
+        .sheet {
+            position:absolute; bottom:-110%; left:50%;
+            transform:translateX(-50%);
+            width:100%; max-width:480px;
+            background:var(--card);
+            border-radius:22px 22px 0 0;
+            padding:0 22px 36px;
+            transition:bottom .36s var(--ease);
+        }
+        .overlay.show .sheet { bottom:0; }
+        .handle {
+            width:34px; height:4px; background:var(--border);
+            border-radius:4px; margin:11px auto 16px;
+        }
+        .sh-hdr {
+            display:flex; justify-content:space-between;
+            align-items:center; margin-bottom:16px;
+        }
+        .sh-hdr h2 { font-size:.98rem; font-weight:700; }
+        .btn-close {
+            width:32px; height:32px; border-radius:50%;
+            border:none; background:var(--bg);
+            color:var(--ink-mid);
+            display:flex; align-items:center; justify-content:center; cursor:pointer;
+        }
+        .btn-close .material-icons-round { font-size:1rem; }
+        .cart-list {
+            max-height:44vh; overflow-y:auto;
+            margin-bottom:14px; padding-right:2px;
+        }
+        .cart-list::-webkit-scrollbar { width:3px; }
+        .cart-list::-webkit-scrollbar-thumb { background:var(--border); border-radius:4px; }
+        .cart-item {
+            display:flex; justify-content:space-between; align-items:center;
+            padding:11px 0; border-bottom:1px dashed var(--border);
+        }
+        .cart-item:last-child { border-bottom:none; }
+        .ci-name { font-size:.82rem; font-weight:600; margin-bottom:3px; }
+        .ci-price { font-size:.74rem; font-weight:700; color:var(--teal); }
+        .qty-ctrl {
+            display:flex; align-items:center; gap:9px;
+            background:var(--bg); padding:3px 8px; border-radius:9px;
+        }
+        .qty-btn {
+            width:25px; height:25px; border-radius:6px;
+            border:none; background:var(--card);
+            font-weight:700; font-size:.9rem; color:var(--ink);
+            box-shadow:var(--sh-sm); cursor:pointer;
+            display:flex; align-items:center; justify-content:center;
+            transition:background .12s;
+        }
+        .qty-btn:active { background:var(--border); }
+        .qty-n { font-size:.82rem; font-weight:700; min-width:18px; text-align:center; }
+        .sh-ftr { border-top:1px solid var(--border); padding-top:15px; }
+        .total-row {
+            display:flex; justify-content:space-between; align-items:center;
+            margin-bottom:13px;
+        }
+        .total-row span { font-size:.8rem; font-weight:500; color:var(--ink-soft); }
+        .total-row strong { font-size:1.12rem; font-weight:800; }
+        .btn-wa {
+            width:100%; background:#22C55E; color:#fff;
+            border:none; padding:15px; border-radius:var(--r);
+            font-family:'Poppins',sans-serif;
+            font-size:.88rem; font-weight:700;
+            display:flex; justify-content:center; align-items:center; gap:8px;
+            cursor:pointer;
+            box-shadow:0 4px 14px rgba(34,197,94,.28);
+            transition:filter .15s, transform .12s;
+        }
+        .btn-wa:active { filter:brightness(.92); transform:scale(.98); }
+        .btn-wa .material-icons-round { font-size:1.05rem; }
+
+        /* ── FOOTER ── */
+        footer {
+            text-align:center;
+            padding:12px 20px 34px;
+            font-size:.68rem; color:var(--ink-soft);
+        }
+        footer strong { color:var(--ink-mid); }
+
+        /* ── TOAST ── */
+        .toast {
+            position:fixed; top:72px; left:50%;
+            transform:translateX(-50%) translateY(-14px);
+            background:var(--ink); color:#fff;
+            padding:8px 16px; border-radius:100px;
+            font-size:.74rem; font-weight:600;
+            z-index:400; opacity:0; pointer-events:none;
+            white-space:nowrap;
+            transition:opacity .22s, transform .22s var(--ease);
+        }
+        .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <div class="hdr-wrap">
+        <header>
+            <div class="logo-box">
+                <!--
+                    CARA PASANG LOGO LOKAL:
+                    1. Taruh file gambar logo (contoh: logo.png) satu folder dengan index.html
+                    2. Hapus baris <span class="logo-fb">WB</span>
+                    3. Uncomment baris img di bawah ini:
+                    
+                -->
+                <img src="logo.png" alt="Logo Warung Bu Sar">
+            </div>
+            <div class="hdr-info">
+                <h1>Warung Bu Sar</h1>
+                <div class="hdr-meta">
+                    <span class="dot-live"></span>
+                    Buka Sekarang &nbsp;·&nbsp; Harga Mahasiswa
+                </div>
+            </div>
+        </header>
+        <div class="filter-row">
+            <button class="pill active" onclick="filterMenu('semua',this)">🍽️ Semua</button>
+            <button class="pill" onclick="filterMenu('makanan',this)">🍕 Makanan</button>
+            <button class="pill" onclick="filterMenu('jajanan',this)">🥟 Jajanan</button>
+            <button class="pill" onclick="filterMenu('minuman',this)">☕ Minuman</button>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <div style="padding:0 20px;">
+        <div class="hero">
+            <div>
+                <div class="hero-lbl">Promo Hari Ini</div>
+                <div class="hero-ttl">Makan Hemat,<br>Kenyang Maksimal</div>
+            </div>
+            <div class="hero-badge">Mulai Rp 2.000</div>
+        </div>
+    </div>
+
+    <!-- MENU -->
+    <main class="menu-wrap">
+
+        <!-- MAKANAN UTAMA -->
+        <div class="menu-group" data-category="makanan">
+            <div class="cat-hd"><h2>Makanan Utama</h2><div class="cat-line"></div></div>
+
+            <div class="menu-item" onclick="addToCart('Nasi Uduk',7000)">
+                <div class="item-img">
+                    <img src="nasi_uduk.jpg" alt="Nasi Uduk" loading="lazy"
+                         onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'img-fb',innerHTML:'🍚'}))">
+                    <span class="badge">⭐ Laris</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-name">Nasi Uduk </div>
+                    <div class="item-desc">Nasi gurih,sambal, gorengan, kerupuk.</div>
+                    <div class="item-bot">
+                        <div class="item-price">Rp 7.000</div>
+                        <button class="btn-add" aria-label="Tambah"><span class="material-icons-round">add</span></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" onclick="addToCart('Mie Ayam Spesial',12000)">
+                <div class="item-img">
+                    <img src="mie_ayam.jpg" alt="Mie Ayam Spesial" loading="lazy"
+                         onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'img-fb',innerHTML:'🍜'}))">
+                </div>
+                <div class="item-info">
+                    <div class="item-name">Mie Ayam Spesial</div>
+                    <div class="item-desc">Mie kenyal, topping ayam semur manis gurih, caisim segar.</div>
+                    <div class="item-bot">
+                        <div class="item-price">Rp 12.000</div>
+                        <button class="btn-add" aria-label="Tambah"><span class="material-icons-round">add</span></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" onclick="addToCart('Nasi Cokot Ayam',6000)">
+                <div class="item-img">
+                    <img src="nasi_cokot.jpg" alt="Nasi Cokot Ayam" loading="lazy"
+                         onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'img-fb',innerHTML:'🍙'}))">
+                </div>
+                <div class="item-info">
+                    <div class="item-name">Nasi Cokot Ayam</div>
+                    <div class="item-desc">Nasi kepal praktis isi ayam suwir pedas, pas buat darurat laper.</div>
+                    <div class="item-bot">
+                        <div class="item-price">Rp 6.000</div>
+                        <button class="btn-add" aria-label="Tambah"><span class="material-icons-round">add</span></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" onclick="addToCart('Nasi Urap',8000)">
+                <div class="item-img">
+                    <img src="nasi_urap.jpg" alt="Nasi Urap" loading="lazy"
+                         onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'img-fb',innerHTML:'🥗'}))">
+                </div>
+                <div class="item-info">
+                    <div class="item-name">Nasi Urap</div>
+                    <div class="item-desc">Nasi hangat dengan urap sayuran segar, kelapa bumbu, dan lauk pilihan.</div>
+                    <div class="item-bot">
+                        <div class="item-price">Rp 8.000</div>
+                        <button class="btn-add" aria-label="Tambah"><span class="material-icons-round">add</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CAMILAN -->
+        <div class="menu-group" data-category="jajanan">
+            <div class="cat-hd"><h2>Camilan</h2><div class="cat-line"></div></div>
+
+            <div class="menu-item" onclick="addToCart('Siomay',5000)">
+                <div class="item-img">
+                    <img src="siomay.jpg" alt="Siomay" loading="lazy"
+                         onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'img-fb',innerHTML:'🥟'}))">
+                </div>
+                <div class="item-info">
+                    <div class="item-name">Siomay</div>
+                    <div class="item-desc">Harga per pcs. Siomay ikan asli, siram bumbu kacang kental.</div>
+                    <div class="item-bot">
+                        <div class="item-price">Rp 5.000</div>
+                        <button class="btn-add" aria-label="Tambah"><span class="material-icons-round">add</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MINUMAN -->
+        <div class="menu-group" data-category="minuman">
+            <div class="cat-hd"><h2>Minuman</h2><div class="cat-line"></div></div>
+
+            <div class="menu-item" onclick="addToCart('Kopi Hitam Panas',5000)">
+                <div class="item-img">
+                    <img src="kopi_hitam.jpg" alt="Kopi Hitam Panas" loading="lazy"
+                         onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'img-fb',innerHTML:'☕'}))">
+                    <span class="badge">⭐ Laris</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-name">Kopi Hitam Panas</div>
+                    <div class="item-desc">Kopi seduh panas mantap, teman setia nongkrong.</div>
+                    <div class="item-bot">
+                        <div class="item-price">Rp 5.000</div>
+                        <button class="btn-add" aria-label="Tambah"><span class="material-icons-round">add</span></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" onclick="addToCart('Cappucino Panas',5000)">
+                <div class="item-img">
+                    <img src="cappucino.jpg" alt="Cappucino Panas" loading="lazy"
+                         onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'img-fb',innerHTML:'🫗'}))">
+                </div>
+                <div class="item-info">
+                    <div class="item-name">Cappucino Panas</div>
+                    <div class="item-desc">Kopi susu dengan busa lembut dan taburan choco granule.</div>
+                    <div class="item-bot">
+                        <div class="item-price">Rp 5.000</div>
+                        <button class="btn-add" aria-label="Tambah"><span class="material-icons-round">add</span></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" onclick="addToCart('Bengbeng Panas',5000)">
+                <div class="item-img">
+                    <img src="bengbeng.jpg" alt="Bengbeng Panas" loading="lazy"
+                         onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'img-fb',innerHTML:'🍫'}))">
+                </div>
+                <div class="item-info">
+                    <div class="item-name">Bengbeng Panas</div>
+                    <div class="item-desc">Minuman cokelat karamel khas yang diseduh hangat.</div>
+                    <div class="item-bot">
+                        <div class="item-price">Rp 5.000</div>
+                        <button class="btn-add" aria-label="Tambah"><span class="material-icons-round">add</span></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" onclick="addToCart('Extrajoss Susu Es',5000)">
+                <div class="item-img">
+                    <img src="extrajoss_susu.jpg" alt="Extrajoss Susu Es" loading="lazy"
+                         onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'img-fb',innerHTML:'🥛'}))">
+                </div>
+                <div class="item-info">
+                    <div class="item-name">Extrajoss Susu (Josu)</div>
+                    <div class="item-desc">Sajian energi ekstra dengan paduan susu kental manis dan es.</div>
+                    <div class="item-bot">
+                        <div class="item-price">Rp 5.000</div>
+                        <button class="btn-add" aria-label="Tambah"><span class="material-icons-round">add</span></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" onclick="addToCart('Cappucino Dingin',5000)">
+                <div class="item-img">
+                    <img src="cappucino_dingin.jpg" alt="Cappucino Dingin" loading="lazy"
+                         onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'img-fb',innerHTML:'🧋'}))">
+                </div>
+                <div class="item-info">
+                    <div class="item-name">Cappucino Dingin</div>
+                    <div class="item-desc">Kopi susu segar dengan es, busa lembut, dan taburan choco granule.</div>
+                    <div class="item-bot">
+                        <div class="item-price">Rp 5.000</div>
+                        <button class="btn-add" aria-label="Tambah"><span class="material-icons-round">add</span></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" onclick="addToCart('Bengbeng Dingin',5000)">
+                <div class="item-img">
+                    <img src="bengbeng_dingin.jpg" alt="Bengbeng Dingin" loading="lazy"
+                         onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'img-fb',innerHTML:'🍫'}))">
+                </div>
+                <div class="item-info">
+                    <div class="item-name">Bengbeng Dingin</div>
+                    <div class="item-desc">Minuman cokelat karamel khas Bengbeng, disajikan dingin dengan es batu.</div>
+                    <div class="item-bot">
+                        <div class="item-price">Rp 5.000</div>
+                        <button class="btn-add" aria-label="Tambah"><span class="material-icons-round">add</span></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" onclick="addToCart('Aneka Marimas',2000)">
+                <div class="item-img">
+                    <img src="marimas.jpg" alt="Aneka Marimas" loading="lazy"
+                         onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'img-fb',innerHTML:'🥤'}))">
+                </div>
+                <div class="item-info">
+                    <div class="item-name">Aneka Marimas</div>
+                    <div class="item-desc">Minuman serbuk segar aneka rasa — jeruk, mangga, sirsak, dan lainnya. Diseduh dingin.</div>
+                    <div class="item-bot">
+                        <div class="item-price">Rp 2.000</div>
+                        <button class="btn-add" aria-label="Tambah"><span class="material-icons-round">add</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>Sampaikan pesanan ke kasir &nbsp;·&nbsp; <strong>© 2026 Warung Bu Sar</strong></p>
+    </footer>
+
+    <!-- CART BAR -->
+    <div id="cart-bar" class="cart-bar hidden" onclick="toggleCart(true)" role="button">
+        <div class="cb-l">
+            <span class="cb-badge" id="cart-count">0</span>
+            <span class="cb-lbl">Item di Keranjang</span>
+        </div>
+        <div class="cb-price">
+            <span id="cart-total">Rp 0</span>
+            <span class="material-icons-round">expand_less</span>
+        </div>
+    </div>
+
+    <!-- CART MODAL -->
+    <div id="overlay" class="overlay" onclick="handleOverlay(event)">
+        <div class="sheet" id="sheet">
+            <div class="handle"></div>
+            <div class="sh-hdr">
+                <h2>Pesanan Anda</h2>
+                <button class="btn-close" onclick="toggleCart(false)">
+                    <span class="material-icons-round">close</span>
+                </button>
+            </div>
+            <div class="cart-list" id="cart-list"></div>
+            <div class="sh-ftr">
+                <div class="total-row">
+                    <span>Total Bayar</span>
+                    <strong id="modal-total">Rp 0</strong>
+                </div>
+                <button class="btn-wa" onclick="checkoutWA()">
+                    <span class="material-icons-round">whatsapp</span>
+                    Pesan via WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        /* ── CONFIG ── ganti nomor WA penerima pesanan ── */
+        const WA_NUMBER = "62089690570322";
+
+        let cart = [];
+        let toastTimer;
+
+        /* Stagger animasi item saat halaman pertama load */
+        document.querySelectorAll('.menu-item').forEach((el, i) => {
+            el.style.animationDelay = (i * 60) + 'ms';
+        });
+
+        function addToCart(name, price) {
+            const found = cart.find(x => x.name === name);
+            found ? found.qty++ : cart.push({ name, price, qty: 1 });
+            refreshCart();
+            showToast(name + ' ditambahkan ✓');
+            document.getElementById('cart-bar').classList.remove('hidden');
+        }
+
+        function changeQty(i, d) {
+            cart[i].qty += d;
+            if (cart[i].qty <= 0) cart.splice(i, 1);
+            refreshCart();
+        }
+
+        function refreshCart() {
+            const list  = document.getElementById('cart-list');
+            const cntEl = document.getElementById('cart-count');
+            const totEl = document.getElementById('cart-total');
+            const modEl = document.getElementById('modal-total');
+            const fmt   = v => 'Rp ' + v.toLocaleString('id-ID');
+
+            let qty = 0, total = 0;
+            list.innerHTML = '';
+
+            cart.forEach((item, i) => {
+                qty   += item.qty;
+                total += item.price * item.qty;
+                list.innerHTML += `
+                <div class="cart-item">
+                    <div>
+                        <div class="ci-name">${item.name}</div>
+                        <div class="ci-price">${fmt(item.price * item.qty)}</div>
+                    </div>
+                    <div class="qty-ctrl">
+                        <button class="qty-btn" onclick="changeQty(${i},-1)">−</button>
+                        <span class="qty-n">${item.qty}</span>
+                        <button class="qty-btn" onclick="changeQty(${i},1)">+</button>
+                    </div>
+                </div>`;
+            });
+
+            cntEl.textContent = qty;
+            totEl.textContent = fmt(total);
+            modEl.textContent = fmt(total);
+
+            if (!cart.length) {
+                document.getElementById('cart-bar').classList.add('hidden');
+                toggleCart(false);
+            }
+        }
+
+        function toggleCart(show) {
+            document.getElementById('overlay').classList.toggle('show', show);
+            document.body.style.overflow = show ? 'hidden' : '';
+        }
+
+        function handleOverlay(e) {
+            if (!document.getElementById('sheet').contains(e.target)) toggleCart(false);
+        }
+
+        function checkoutWA() {
+            if (!cart.length) return;
+            let msg = '*Halo Warung Bu Sar*, saya mau pesan:\n\n';
+            let total = 0;
+            cart.forEach(x => {
+                msg   += `▪️ ${x.name} (${x.qty}x) — Rp ${(x.price*x.qty).toLocaleString('id-ID')}\n`;
+                total += x.price * x.qty;
+            });
+            msg += `\n*Total: Rp ${total.toLocaleString('id-ID')}*\n\n_Mohon segera disiapkan, terima kasih!_`;
+            window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        function filterMenu(cat, btn) {
+            document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+            btn.classList.add('active');
+
+            let delay = 0;
+            document.querySelectorAll('.menu-group').forEach(grp => {
+                const show = cat === 'semua' || grp.dataset.category === cat;
+                grp.style.display = show ? 'block' : 'none';
+                if (!show) return;
+
+                grp.querySelectorAll('.menu-item').forEach((el, i) => {
+                    el.style.opacity = '0';
+                    el.style.transform = 'translateY(14px)';
+                    el.style.transition = 'none';
+                    void el.offsetWidth;
+                    const d = (delay + i) * 60;
+                    setTimeout(() => {
+                        el.style.transition = 'opacity .34s ease, transform .34s cubic-bezier(0.22,1,0.36,1)';
+                        el.style.opacity = '1';
+                        el.style.transform = 'translateY(0)';
+                    }, d);
+                });
+                delay += grp.querySelectorAll('.menu-item').length;
+            });
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => t.classList.remove('show'), 1800);
+        }
+    </script>
+</body>
+</html>
